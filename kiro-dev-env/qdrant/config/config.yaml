@@ -1,0 +1,60 @@
+log_level: INFO
+
+storage:
+  storage_path: /qdrant/storage
+  snapshots_path: /qdrant/snapshots
+  snapshots_config:
+    snapshots_storage: local
+
+  # RAM 251GB / 開発機なので payload もメモリに乗せて速度優先
+  on_disk_payload: false
+
+  wal:
+    wal_capacity_mb: 64
+    wal_segments_ahead: 2
+
+  performance:
+    # 0 = 自動（72コア全部使う）
+    max_search_threads: 0
+    optimizer_cpu_budget: 0
+    max_concurrent_collection_loads: 4
+    max_concurrent_shard_loads: 4
+    max_concurrent_segment_loads: 16
+
+  optimizers:
+    default_segment_number: 0
+    max_segment_size_kb: null
+    # indexing_threshold_kb を上げてプレーンスキャン優先にすると
+    # 小規模データではむしろ速い場合がある。開発用途のデータ量次第で調整。
+    indexing_threshold_kb: 20000
+    flush_interval_sec: 5
+    max_optimization_threads: null
+
+  hnsw_index:
+    m: 16
+    ef_construct: 100
+    full_scan_threshold_kb: 20000
+    max_indexing_threads: 0
+    # RAM に余裕があるので on_disk は使わずメモリ保持
+    on_disk: false
+
+  collection:
+    replication_factor: 1
+    write_consistency_factor: 1
+    vectors:
+      on_disk: false
+    quantization: null
+
+service:
+  max_request_size_mb: 64
+  max_workers: 0
+  host: 0.0.0.0
+  http_port: 6333
+  grpc_port: 6334
+  enable_cors: true
+  enable_tls: false
+
+cluster:
+  enabled: false
+
+telemetry_disabled: true

@@ -1,0 +1,23 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.12.4
+    container_name: qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"   # REST / Web UI
+      - "6334:6334"   # gRPC
+    volumes:
+      - ./storage:/qdrant/storage
+      - ./snapshots:/qdrant/snapshots
+      - ./config/config.yaml:/qdrant/config/production.yaml:ro
+    environment:
+      - QDRANT__LOG_LEVEL=INFO
+    # RAMは大容量まで自由に使える前提。上限を絞る場合は以下を有効化。
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 64g
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536

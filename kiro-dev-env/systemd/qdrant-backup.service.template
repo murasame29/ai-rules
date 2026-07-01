@@ -1,0 +1,6 @@
+[Unit]
+Description=Qdrant snapshot backup
+
+[Service]
+Type=oneshot
+ExecStart=__HOME__/qdrant/scripts/backup.sh

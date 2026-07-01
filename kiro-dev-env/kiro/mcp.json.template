@@ -1,0 +1,81 @@
+{
+  "mcpServers": {
+    "aws-docs": {
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-documentation-mcp-server@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "read_documentation",
+        "search_documentation"
+      ]
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "query-docs",
+        "resolve-library-id"
+      ]
+    },
+    "new-relic-mcp": {
+      "url": "https://mcp.newrelic.com/mcp/",
+      "headers": {
+        "api-key": "${NEW_RELIC_API_KEY}"
+      },
+      "autoApprove": [
+        "execute_nrql_query",
+        "list_available_new_relic_accounts",
+        "list_alert_policies",
+        "get_entity",
+        "list_alert_conditions",
+        "list_synthetic_monitors",
+        "list_entity_error_groups",
+        "list_recent_issues",
+        "list_entity_types",
+        "list_dashboards",
+        "get_dashboard",
+        "convert_time_period_to_epoch_ms"
+      ]
+    },
+    "qdrant-memory": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-qdrant"
+      ],
+      "env": {
+        "QDRANT_URL": "http://localhost:6333",
+        "COLLECTION_NAME": "${QDRANT_USER}-memory",
+        "EMBEDDING_MODEL": "sentence-transformers/all-MiniLM-L6-v2"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+    "qdrant-common": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-qdrant"
+      ],
+      "env": {
+        "QDRANT_URL": "http://localhost:6333",
+        "COLLECTION_NAME": "${QDRANT_USER}-common",
+        "EMBEDDING_MODEL": "sentence-transformers/all-MiniLM-L6-v2"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+    "excalidraw": {
+      "url": "https://mcp.excalidraw.com/mcp",
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}

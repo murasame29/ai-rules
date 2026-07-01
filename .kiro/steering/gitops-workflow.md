@@ -23,17 +23,19 @@ Trunk-Based Development を採用する。`main` が唯一の統合ブランチ�
 ### 作業ブランチの命名規則
 
 ```
-{type}/{issue-number}-{short-description}
+{type}/{short-description}
+{type}/{issue-number}-{short-description}  # Issue が存在する場合
 ```
 
 | type | 用途 | 例 |
 |------|------|-----|
-| `feature` | 新機能 | `feature/123-user-registration` |
-| `fix` | バグ修正 | `fix/456-login-timeout` |
-| `refactor` | リファクタリング | `refactor/101-extract-auth-service` |
-| `chore` | CI/CD、依存更新、ドキュメント等 | `chore/102-update-go-version` |
+| `feature` | 新機能 | `feature/user-registration`, `feature/123-user-registration` |
+| `fix` | バグ修正 | `fix/login-timeout`, `fix/456-login-timeout` |
+| `refactor` | リファクタリング | `refactor/extract-auth-service` |
+| `chore` | CI/CD、依存更新、ドキュメント等 | `chore/update-go-version` |
 
-- Issue 番号を必ず含める（トレーサビリティ確保）
+- Issue ドリブンは必須ではない。Issue があれば番号を含めてトレーサビリティを
+  上げるが、無くても作業を開始してよい
 - 説明部分はケバブケース、英語、簡潔に
 - 長すぎるブランチ名は避ける（目安: 50文字以内）
 
@@ -79,6 +81,19 @@ Verification token expires after 24 hours.
 
 Closes #123
 ```
+
+## PR タイトル
+
+PR タイトルは日本語で記述する。Conventional Commits の type プレフィックスは維持する。
+
+```
+{type}(scope): 日本語の説明
+```
+
+例:
+- `feat(user): メール認証フローを追加`
+- `fix(auth): ログインタイムアウトを修正`
+- `chore(newrelic): reboot condition を notify workflow に追加`
 
 ## GitHub CLI（gh）の活用
 
@@ -188,7 +203,7 @@ gh pr merge 456 --delete-branch
 ## 概要
 <!-- この PR で何を変更したか -->
 
-Closes #<issue-number>
+Closes #<issue-number>  <!-- 対応する Issue がある場合のみ記載。無ければ削除してよい -->
 
 ## 変更内容
 <!-- 主要な変更点を箇条書きで -->
@@ -253,5 +268,4 @@ Closes #<issue-number>
 - コミットメッセージが `fix` や `update` だけ（履歴が追えない）
 - `main` への直接 push（レビューなしのデプロイ）
 - マージ後にブランチを放置する（ブランチが増殖する）
-- Issue なしで作業を始める（トレーサビリティが失われる）
 - レビューコメントを無視してマージする

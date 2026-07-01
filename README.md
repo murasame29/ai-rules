@@ -10,6 +10,7 @@ Kiro の Steering / Skills として管理する、AI エージェント向け�
 │   ├── architecture-philosophy.md         # システムアーキテクチャ決定原則（Clean Architecture, ADR）
 │   ├── gitops-workflow.md                 # GitOps ワークフロー（Trunk-Based, Conventional Commits）
 │   ├── golang-rule.md                     # Golang コーディングルール（fileMatch: **/*.go）
+│   ├── knowledge-graph-policy.md          # Qdrant memory の運用ルール（記録粒度、ドメイン分離）
 │   ├── monitoring-alerting-philosophy.md  # Monitoring & Alerting 哲学（Four Golden Signals, Burn Rate）
 │   ├── observability-philosophy.md        # Observability 原則（OTel Semantic Conventions）
 │   ├── software-engineering-philosophy.md # ソフトウェア工学哲学（Software Engineering at Google）
@@ -27,6 +28,7 @@ Kiro の Steering / Skills として管理する、AI エージェント向け�
 |---------|-----------|------|
 | `architecture-philosophy.md` | auto | Clean Architecture、ADR、設計の最上位原則、セキュリティ |
 | `gitops-workflow.md` | auto | ブランチ命名、Conventional Commits、Issue/PR テンプレート、gh CLI |
+| `knowledge-graph-policy.md` | auto | Qdrant memory (mcp-server-qdrant) の記録ルール、ドメイン分離（ワークスペース別コレクション） |
 | `golang-rule.md` | fileMatch (`**/*.go`) | Go 固有の Stack・命名・パッケージ構成・エラーハンドリング・テスト・Observability 実装 |
 | `monitoring-alerting-philosophy.md` | auto | Four Golden Signals、SLO ベースアラート、Burn Rate、新規サービス初期アラート設計 |
 | `observability-philosophy.md` | auto | OTel Semantic Conventions 準拠の Log/Trace/Metrics 属性命名 |
@@ -54,3 +56,21 @@ Kiro の Steering / Skills として管理する、AI エージェント向け�
 ## 使用
 
 勝手に使ってください。※宗教的に問題があっても文句は受け付けません
+このリポジトリを Kiro の `.kiro/steering/` `.kiro/skills/` にそのまま配置するか、
+`kiro-dev-env/install.sh` を使って Qdrant memory を含む開発環境一式（MCP設定・
+バックアップ等）とまとめてセットアップする。
+
+```bash
+git clone https://github.com/murasame29/ai-rules.git
+cd ai-rules
+
+# steering / skills だけ使う場合
+cp .kiro/steering/*.md ~/.kiro/steering/
+cp .kiro/skills/*.md ~/.kiro/skills/
+
+# Qdrant memory を含む開発環境一式をセットアップする場合
+cd kiro-dev-env
+./install.sh
+```
+
+`kiro-dev-env/` の詳細は [kiro-dev-env/README.md](./kiro-dev-env/README.md) を参照。
